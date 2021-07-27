@@ -83,7 +83,7 @@ const AboutNavigator = createStackNavigator(
       },
     }
   );
-// End Task //
+// End //
 
 const MainNavigator = createDrawerNavigator(
     {

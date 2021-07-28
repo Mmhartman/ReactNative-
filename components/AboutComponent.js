@@ -3,6 +3,7 @@ import { ScrollView, Text, FlatList } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+import Loading from './LoadingComponent'; // no curly braces bec. it's default export //
 
 const mapStateToProps = state => {
     return {
@@ -10,7 +11,7 @@ const mapStateToProps = state => {
     };
 };
 
-function Mission({}) { // task 2 //
+function Mission() { 
 
     return (
         <Card
@@ -29,19 +30,40 @@ class About extends Component {
         title: 'About Us' 
     }
 
-    render () {
-
-        const renderPartner = ({item}) => { // task 3 // 
+    render() {
+        const renderPartner = ({item}) => {
             return (
                 <ListItem
-                 title={item.name}
-                 subtitle={item.description}
-                 leftAvatar={{source: {uri: baseUrl + item.image}}}
-                 />
+                    title={item.name}
+                    subtitle={item.description}
+                    leftAvatar={{source: {uri: baseUrl + item.image}}}
+                />
             );
         };
 
-        return ( 
+        if (this.props.partners.isLoading) {
+            return (
+                <ScrollView>
+                    <Mission />
+                    <Card
+                        title='Community Partners'>
+                        <Loading />
+                    </Card>
+                </ScrollView>
+            );
+        }
+        if (this.props.partners.errMess) {
+            return (
+                <ScrollView>
+                    <Mission />
+                    <Card
+                        title='Community Partners'>
+                        <Text>{this.props.partners.errMess}</Text>
+                    </Card>
+                </ScrollView>
+            );
+        }
+        return (
             <ScrollView>
                 <Mission /> 
                 <Card

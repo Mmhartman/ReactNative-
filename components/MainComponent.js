@@ -129,7 +129,7 @@ const ContactNavigator = createStackNavigator(
     }
 );
 
-cconst ReservationNavigator = createStackNavigator(
+const ReservationNavigator = createStackNavigator(
     {
         Reservation: { screen: Reservation }
     },

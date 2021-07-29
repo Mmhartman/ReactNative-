@@ -5,6 +5,7 @@ import CampsiteInfo from './CampsiteInfoComponent';
 import Constants from 'expo-constants';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
+import Reservation from './ReservationComponent';
 
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native'; // Stack Navigator Icons  & Custom Side Drawer -> Text, ScrollView, Image //
 import { createStackNavigator } from 'react-navigation-stack';
@@ -105,7 +106,7 @@ const AboutNavigator = createStackNavigator(
 );
 
   
-  const ContactNavigator = createStackNavigator(
+const ContactNavigator = createStackNavigator(
     {
         Contact: { screen: Contact }
     },
@@ -127,6 +128,30 @@ const AboutNavigator = createStackNavigator(
         })
     }
 );
+
+cconst ReservationNavigator = createStackNavigator(
+    {
+        Reservation: { screen: Reservation }
+    },
+    {
+        defaultNavigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='tree'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }
+);
+
 //Stack Navigator Icons//
 const CustomDrawerContentComponent = props => (
   <ScrollView>
@@ -179,6 +204,22 @@ const MainNavigator = createDrawerNavigator(
               )
           }
       },
+
+      Reservation: {
+        screen: ReservationNavigator,
+        navigationOptions: {
+            drawerLabel: 'Reserve Campsite',
+            drawerIcon: ({tintColor}) => (
+                <Icon
+                    name='tree'
+                    type='font-awesome'
+                    size={24}
+                    color={tintColor}
+                />
+            )
+        }
+    },
+
       About: {
           screen: AboutNavigator,
           navigationOptions: {

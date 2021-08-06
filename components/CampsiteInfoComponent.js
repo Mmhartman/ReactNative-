@@ -166,7 +166,7 @@ class CampsiteInfo extends Component {
 
     // TASK 1 Event handler 
     toggleModal() {
-        // check surrent state of property and toggle it to opposite using setState
+        // check current state of property and toggle it to opposite using setState
         this.setState({ showModal: !this.state.showModal });
 
     }
@@ -205,7 +205,7 @@ class CampsiteInfo extends Component {
         return (
             <ScrollView>
                 <RenderCampsite campsite={campsite}
-                    // iclude will return  boolean true or false
+                    // include will return  boolean true or false
                     favorite={this.props.favorites.includes(campsiteId)}
                     markFavorite={() => this.markFavorite(campsiteId)}
                     onShowModal={() => this.toggleModal()}

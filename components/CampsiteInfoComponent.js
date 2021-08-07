@@ -32,8 +32,12 @@ function RenderCampsite(props) {
 
     const view = React.createRef();
 
-        // Remember: - 100 would be bigger //
+    // Remember: - 100 would be bigger //
     const recognizeDrag = ({dx}) => (dx < -200) ? true: false;
+
+    // TASK 3 // 
+    const recognizeComment = ({dx}) => (dx > 200) ? true: false;
+
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -61,8 +65,12 @@ function RenderCampsite(props) {
                         }
                     ],
                     { cancelable: false }
-                );
-            }
+                )
+                // start - TASK 3 WK 3 //
+            } if 
+            (recognizeComment(gestureState)) {
+                props.onShowModal();
+            }  // end - TASK 3 WK 3 //
             return true;
         }
     })
@@ -118,7 +126,7 @@ function RenderComments({ comments }) {
         return (
             <View style={{ margin: 10 }}>
                 <Text style={{ fontSize: 14 }}>{item.text}</Text>
-                {/* TASK 2 */}
+               
 
                 <Rating
                     imageSize={10}

@@ -6,12 +6,12 @@ import * as Animatable from 'react-native-animatable';
 class Contact extends Component {
     
     
-    static navigationOptions = { // task 1 bul 2 //
+    static navigationOptions = { 
         title: 'Contact Us'
     }
 
     render () {
-        return ( // Task 1 bul 2 //
+        return (
             <ScrollView>
                 <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
                         <Card 

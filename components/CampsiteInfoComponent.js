@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList,
     Modal, Button, StyleSheet,
-    Alert, PanResponder } from 'react-native';
+    Alert, PanResponder, Share } from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -35,7 +35,7 @@ function RenderCampsite(props) {
     // Remember: - 100 would be bigger //
     const recognizeDrag = ({dx}) => (dx < -200) ? true: false;
 
-    // TASK 3 // 
+
     const recognizeComment = ({dx}) => (dx > 200) ? true: false;
 
 
@@ -66,14 +66,28 @@ function RenderCampsite(props) {
                     ],
                     { cancelable: false }
                 )
-                // start - TASK 3 WK 3 //
+               
             } if 
             (recognizeComment(gestureState)) {
                 props.onShowModal();
-            }  // end - TASK 3 WK 3 //
+            }  
             return true;
         }
     })
+
+    // IMPLEMENT INNER FUNCTION /
+    const shareCampsite = (title, message, url ) => {
+        Share.share ({ // CONTENT OF WHAT'S BEING SHARED //
+            title: title,
+            message: `${title}: ${message} ${url}`,
+            url: url
+            
+        }, { // SHARE METHOD A SECOND OPTIONAL OBJECT  THAT CAN HOLD EXTRA CONFIG VALUES // 
+            dialogTitle: 'Share ' + title  //value of dialog for android only // 
+        });
+    };
+
+
 
     if (campsite) {
         return (
@@ -110,6 +124,15 @@ function RenderCampsite(props) {
                             raised
                             reverse
                             onPress={() => props.onShowModal()}
+                        />
+
+                        <Icon // SHARE ICON //
+                            name={'share'}
+                            type='font-awesome'
+                            color='#5637DD'
+                            raised
+                            reverse
+                            onPress={() => shareCampsite(campsite.name, campsite.description, baseUrl + campsite.image)}
                         />
                     </View>
 
@@ -172,14 +195,14 @@ class CampsiteInfo extends Component {
     }
 
 
-    // TASK 1 Event handler 
+
     toggleModal() {
         // check current state of property and toggle it to opposite using setState
         this.setState({ showModal: !this.state.showModal });
 
     }
 
-    // TASK 2 & 3 //
+   
   
     handleComment(campsiteId) {
 
@@ -188,7 +211,7 @@ class CampsiteInfo extends Component {
         this.toggleModal();
 
     }
-    // TASK 2 Reset form: 
+    // Reset form: 
     resetForm() {
         this.setState({
             showModal: false,

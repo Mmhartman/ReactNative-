@@ -7,6 +7,7 @@ import About from './AboutComponent';
 import Contact from './ContactComponent';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoritesComponent';
+import Login from './LoginComponent';
 
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native'; // Stack Navigator Icons  & Custom Side Drawer -> Text, ScrollView, Image //
 import { createStackNavigator } from 'react-navigation-stack';
@@ -176,6 +177,29 @@ const FavoritesNavigator = createStackNavigator(
     }
 );
 
+// from LOG IN COMPONENT 
+const LoginNavigator = createStackNavigator(
+    {
+        Login: { screen: Login }
+    },
+    {
+        defaultNavigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='sign-in'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }
+);
 
 
 
@@ -205,6 +229,21 @@ const CustomDrawerContentComponent = props => (
 //Drawer Navigator Icons//
 const MainNavigator = createDrawerNavigator(
   {
+    // LOG IN MENU OPTION // 
+    Login: {
+        screen: LoginNavigator,
+        navigationOptions: {
+            drawerIcon: ({tintColor}) => (
+                <Icon
+                    name='sign-in'
+                    type='font-awesome'
+                    size={24}
+                    color={tintColor}
+                />
+            )
+        }
+    },
+
       Home: {
           screen: HomeNavigator,
           navigationOptions: {
@@ -218,6 +257,7 @@ const MainNavigator = createDrawerNavigator(
               )
           }
       },
+      
       Directory: {
           screen: DirectoryNavigator,
           navigationOptions: {
@@ -292,6 +332,7 @@ const MainNavigator = createDrawerNavigator(
       }
   },
   {
+    initialRouteName: 'Home', // EXPLICITLY SET THAT TO HOME SO IT DOESN'T JUST USE WHATEVER COMES FIRST IN THE LIST OF DRAWER NAVIGATOR // 
     drawerBackgroundColor: '#CEC8FF',
     contentComponent: CustomDrawerContentComponent 
   }

@@ -11,7 +11,7 @@ class Reservation extends Component {
 
         this.state = {
             campers: 1,
-            hikeIn: false,
+            hikeIn: false, 
             date: new Date(),
             showCalendar: false,
 
@@ -101,7 +101,7 @@ class Reservation extends Component {
                         <DateTimePicker
                             value={this.state.date}
                             mode={'date'}
-                            diaplay='default'
+                            display='default'
                             onChange={(event, selectedDate) => {
                                 selectedDate && this.setState({ date: selectedDate, showCalendar: false });
                             }}

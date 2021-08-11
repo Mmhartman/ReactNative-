@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Animatable from 'react-native-animatable';
-
+import * as Notifications from 'expo-notifications';
 
 class Reservation extends Component {
 
@@ -37,12 +37,16 @@ class Reservation extends Component {
             },
             {
                 text: 'OK',
-                onPress: () => this.resetForm(),
-            },
+                onPress: () => {
+                    this.presentLocalNotification(this.state.date.toLocaleDateString('en-US')); // PRESENT THE NOTIF
+                    this.resetForm();
+                }
+            }
         ],
         {cancelable: false}
         );
     }
+
     // reset form
     resetForm() {
         this.setState({
@@ -52,7 +56,39 @@ class Reservation extends Component {
             showCalendar: false,
         });
     }
-// TASK 1 // 
+
+    // NEW SYNTAX "ASYNC/AWAIT".NEED TO REQST PERMISSIONS FROM THIS DEVICE. ASYNC METHOD OR FUNC // 
+    async presentLocalNotification(date) {
+
+        function sendNotification() { // VERIFY NOTIFICATION FROM THE DEVICE TO DO SO //
+
+            Notifications.setNotificationHandler({ // SHOW ALERT //
+                handleNotification: async () => ({
+                    shouldShowAlert: true
+                })
+            });
+
+            Notifications.scheduleNotificationAsync({ // SCHEDULED NOTIFICATION. PROVIDED NOTIF API // 
+                content: {
+                    title: 'Your Campsite Reservation Search',
+                    body: `Search for ${date} requested`
+                },
+                trigger: null // WILL CAUSE THE NOTIF TO FIRE IMMEDIATELY, CAN ALSO BE USED TO SCHED THE NOTIF IN THE FUTURE// 
+            });
+        }
+
+    // PERMISSION //
+    let permissions = await Notifications.getPermissionsAsync(); 
+    // THE ONLY TIME YOU CAN USE await KEYWORD IS INSIDE AN async FUNCTION,FOLLOWED BY A promise // 
+
+    if (!permissions.granted) {
+        permissions = await Notifications.requestPermissionsAsync();
+    }
+    if (permissions.granted) {
+        sendNotification();
+    }
+}
+  
     render() {
         return (
             <ScrollView>

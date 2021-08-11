@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
 import { Text, ScrollView } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Card, Button, Icon } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
+import * as MailComposer from 'expo-mail-composer';
+
 
 class Contact extends Component {
     
     
     static navigationOptions = { 
         title: 'Contact Us'
+    }
+
+    //CONFIGURE A METHOD SEND MAIL //
+    sendMail() {
+        MailComposer.composeAsync({ // async METHOD TO SET UP A NEW EMAIL //
+            //OPTIONS ARGUMENTS //
+            recipients: ['campsite@nucamp.co'],
+            subject: 'Inquiry',
+            body: 'To whom it may concern:'
+        })
     }
 
     render () {
@@ -29,6 +41,19 @@ class Contact extends Component {
                             <Text>
                                 Email: campsites@nucamp.co
                             </Text>
+                            <Button // ENHANCE VERSION W/ CONFIG OPTIONS //
+                                title="Send Email"
+                                buttonStyle={{ backgroundColor: '#5637DD', margin: 40 }}
+                                icon={<Icon // ICON PROP 
+                                    name='envelope-o'
+                                    type='font-awesome'
+                                    color='#fff'
+                                    iconStyle={{marginRight: 10}}
+                                    />}
+
+                                // ON PRESS PROP //
+                                onPress={() => this.sendMail()} // WHEN THIS BUTTON IS PRESSED, THE SEND MAIL EVENT HANDLER METHOD WILL BE EXECUTED // 
+                            />
                         </Card>
                 </Animatable.View>
             </ScrollView>

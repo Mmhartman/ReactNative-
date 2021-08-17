@@ -128,8 +128,10 @@ class LoginTab extends Component {
     }
 }
 
-class RegisterTab extends Component {
 
+// REGISTER TAB COMPONENT 
+class RegisterTab extends Component {
+    // ADD REGISTRATION FORM 
     constructor(props) {
         super(props);
 
@@ -155,16 +157,19 @@ class RegisterTab extends Component {
         )
     }
 
+    // IMG PICKER API //
     getImageFromCamera = async () => {
+        // 2 SETS OF PERMISSIONS BEC. SOME CASES YOU NEED TO ACCESS THE CAMERA BUT NOT THE CAMERA ROLL //
         const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
         const cameraRollPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
+
         if (cameraPermission.status === 'granted' && cameraRollPermission.status === 'granted') {
-            const capturedImage = await ImagePicker.launchCameraAsync({
+            const capturedImage = await ImagePicker.launchCameraAsync({ // HOLD THE LOCAL URI THE FILE PATH OF THE CAPTURED IMG //
                 allowsEditing: true,
                 aspect: [1, 1]
             });
-            if (!capturedImage.cancelled) {
+            if (!capturedImage.cancelled) { // IF NOT CAPTURED IMG CXLD //
                 console.log(capturedImage);
                 this.setState({imageUrl: capturedImage.uri});
             }
@@ -189,16 +194,20 @@ class RegisterTab extends Component {
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
+
                         <Image
-                            source={{uri: this.state.imageUrl}}
-                            loadingIndicatorSource={require('./images/logo.png')}
-                            style={styles.image}
+                            source={{uri: this.state.imageUrl}} // INITIALIZED TO RETRIEVE THE LOGO IMAGE SERVED FROM JSON SERVER AS IT SOURCE
+                            loadingIndicatorSource={require('./images/logo.png')} // LOADING INDICATOR SOURCE PROP, LOCAL IMAGE FILE PATH, NOT SERVER BUT LOCALLY
+                            style={styles.image} // ALSO ADD TO STYLESHEET
                         />
+
+
                         <Button
                             title='Camera'
                             onPress={this.getImageFromCamera}
                         />
                     </View>
+
                     <Input
                         placeholder='Username'
                         leftIcon={{type: 'font-awesome', name: 'user-o'}}
@@ -277,7 +286,7 @@ const Login = createBottomTabNavigator(
             activeBackgroundColor: '#5637DD',
             inactiveBackgroundColor: '#CEC8FF',
             activeTintColor: '#fff',
-            inactiveTintColor: '#808080',
+            inactiveTintColor: '#808080', // GREY 
             labelStyle: {fontSize: 16}
         }
     }

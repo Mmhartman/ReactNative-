@@ -346,24 +346,30 @@ const AppNavigator = createAppContainer(MainNavigator)
 
 class Main extends Component {
 
-        componentDidMount() {
-        this.props.fetchCampsites();
-        this.props.fetchComments();
-        this.props.fetchPromotions();
-        this.props.fetchPartners();
+         // TASK 3 
+         showNetInfo = async () => {
+            const connectionInfo = await NetInfo.fetch();
 
-        // Use NetInfo.fetch() method to obtain network state once
-        NetInfo.fetch().then(connectionInfo => {
             (Platform.OS === 'ios') // Platform API and ternary operator //
                 ? Alert.alert('Initial Network Connectivity Type:', connectionInfo.type) // if IOS display this type of connection 
                 : ToastAndroid.show('Initial Network Connectivity Type: ' +
                     connectionInfo.type, ToastAndroid.LONG); // if not IOS // 
-        });
+       
 
         // subscribe to network changes //
         this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
             this.handleConnectivityChange(connectionInfo);
         });
+    }
+
+        componentDidMount() {
+        this.props.fetchCampsites();
+        this.props.fetchComments();
+        this.props.fetchPromotions();
+        this.props.fetchPartners();
+        this.showNetInfo();
+
+       
     }
 
     //another react lifecycle method 
